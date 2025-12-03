@@ -29,3 +29,13 @@ strip = true
 lto = true
 panic = "abort"
 opt-level = "z"
+
+[[bin]]
+name = "day2"
+bench = false
+test = true
+
+[[bench]]
+name = "day2"
+harness = false
+path = "src/bin/day2/bench.rs"
