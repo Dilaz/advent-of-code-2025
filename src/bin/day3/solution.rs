@@ -2,7 +2,6 @@
 pub mod utils;
 pub use utils::Solution;
 use miette::Result;
-use rayon::prelude::*;
 pub struct Day3;
 
 const PART_2_NUMS: usize = 12;
@@ -36,7 +35,7 @@ impl Solution<u64> for Day3 {
     #[tracing::instrument]
     fn part2(input: &str) -> Result<u64> {
         let batteries = input.lines().map(|line| line.chars().map(|num| num.to_digit(10).unwrap() as u64).collect::<Vec<u64>>()).collect::<Vec<Vec<u64>>>();
-        let sum = batteries.par_iter().map(|battery| {
+        let sum = batteries.iter().map(|battery| {
             let mut stack = Vec::with_capacity(PART_2_NUMS);
             let n = battery.len();
             for (i, &digit) in battery.iter().enumerate() {
