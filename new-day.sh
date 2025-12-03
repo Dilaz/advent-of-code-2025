@@ -25,6 +25,7 @@ fi
 
 # Copy template
 cp -r "$SCRIPT_DIR/src/bin/template" "$SRC_DIR"
+chmod -R u+w "$SRC_DIR"
 
 # Replace DayX with Day{N} and dayX.txt with day{N}.txt
 for file in "$SRC_DIR"/*.rs; do
@@ -44,6 +45,7 @@ test = true
 [[bench]]
 name = "day$DAY"
 harness = false
+path = "src/bin/day$DAY/bench.rs"
 EOF
 fi
 
