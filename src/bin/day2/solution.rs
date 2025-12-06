@@ -4,23 +4,10 @@ use itertools::Itertools;
 pub use utils::Solution;
 use miette::Result;
 use rayon::prelude::*;
+pub use utils::Length;
 pub struct Day2;
 
-trait Length {
-    fn len(&self) -> usize;
-}
 
-impl Length for u64 {
-    fn len(&self) -> usize {
-        let mut num = *self;
-        let mut size = 0;
-        while num > 0 {
-            num /= 10;
-            size += 1;
-        }
-        size
-    }
-}
 
 fn is_invalid_part1(num: u64) -> bool {
     let num_len = num.len() as u32;
