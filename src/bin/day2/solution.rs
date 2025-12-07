@@ -1,13 +1,14 @@
 #[path = "../../utils.rs"]
 pub mod utils;
+
 use itertools::Itertools;
-pub use utils::Solution;
-use miette::Result;
 use rayon::prelude::*;
-pub use utils::Length;
+
+pub use utils::{Length, Result, Solution};
+
+pub type Answer = u64;
+
 pub struct Day2;
-
-
 
 fn is_invalid_part1(num: u64) -> bool {
     let num_len = num.len() as u32;
@@ -29,7 +30,7 @@ fn is_invalid_part2(num: u64) -> bool {
         let mut current = num;
         let first = current % multiplier;
         current /= multiplier;
-        
+
         let mut ok = true;
         while current > 0 {
             let next = current % multiplier;
@@ -47,25 +48,43 @@ fn is_invalid_part2(num: u64) -> bool {
     false
 }
 
-impl Solution<u64> for Day2 {
+impl Solution<Answer> for Day2 {
     #[tracing::instrument]
-    fn part1(input: &str) -> Result<u64> {
+    fn part1(input: &str) -> Result<Answer> {
         let pairs = input.split(',').collect::<Vec<&str>>();
-        let sum =pairs.par_iter().map(|pair| {
-            let (start, end) = pair.split('-').map(|num| num.parse::<u64>().unwrap()).collect_tuple().unwrap();
-            (start..=end).filter(|num| is_invalid_part1(*num)).sum::<u64>()
-        }).sum::<u64>();
+        let sum = pairs
+            .par_iter()
+            .map(|pair| {
+                let (start, end) = pair
+                    .split('-')
+                    .map(|num| num.parse::<u64>().unwrap())
+                    .collect_tuple()
+                    .unwrap();
+                (start..=end)
+                    .filter(|num| is_invalid_part1(*num))
+                    .sum::<u64>()
+            })
+            .sum::<u64>();
 
         Ok(sum)
     }
-    
+
     #[tracing::instrument]
-    fn part2(input: &str) -> Result<u64> {
+    fn part2(input: &str) -> Result<Answer> {
         let pairs = input.split(',').collect::<Vec<&str>>();
-        let sum =pairs.iter().map(|pair| {
-            let (start, end) = pair.split('-').map(|num| num.parse::<u64>().unwrap()).collect_tuple().unwrap();
-            (start..=end).filter(|num| is_invalid_part2(*num)).sum::<u64>()
-        }).sum::<u64>();
+        let sum = pairs
+            .iter()
+            .map(|pair| {
+                let (start, end) = pair
+                    .split('-')
+                    .map(|num| num.parse::<u64>().unwrap())
+                    .collect_tuple()
+                    .unwrap();
+                (start..=end)
+                    .filter(|num| is_invalid_part2(*num))
+                    .sum::<u64>()
+            })
+            .sum::<u64>();
 
         Ok(sum)
     }
@@ -99,7 +118,7 @@ mod tests {
         assert!(is_invalid_part2(123123));
         assert!(is_invalid_part2(121212));
         assert!(is_invalid_part2(101010));
-        
+
         assert!(!is_invalid_part2(10));
         assert!(!is_invalid_part2(12));
         assert!(!is_invalid_part2(123));

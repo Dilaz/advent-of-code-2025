@@ -1,4 +1,5 @@
-use miette::Result;
+pub type Result<T> = miette::Result<T>;
+
 pub trait Solution<T> {
     fn part1(input: &str) -> Result<T>;
     fn part2(input: &str) -> Result<T>;
@@ -13,7 +14,7 @@ pub trait Length {
 }
 
 impl Length for u64 {
-     fn len(&self) -> usize {
+    fn len(&self) -> usize {
         let mut num = *self;
         let mut size = 0;
         while num > 0 {

@@ -1,57 +1,80 @@
 #[path = "../../utils.rs"]
 pub mod utils;
-pub use utils::Solution;
-use miette::Result;
+
+pub use utils::{Result, Solution};
+
+pub type Answer = u64;
+
 pub struct Day3;
 
 const PART_2_NUMS: usize = 12;
 
-impl Solution<u64> for Day3 {
+impl Solution<Answer> for Day3 {
     #[tracing::instrument]
-    fn part1(input: &str) -> Result<u64> {
-        let batteries = input.lines().map(|line| line.chars().map(|num| num.to_digit(10).unwrap() as u64).collect::<Vec<u64>>()).collect::<Vec<Vec<u64>>>();
-        let sum = batteries.iter().map(|battery| {
-            let mut max_jolts = 0;
-            let mut start_iter = battery.iter();
-            for first in start_iter.clone() {
-                let second_iter = start_iter.clone().skip(1);
+    fn part1(input: &str) -> Result<Answer> {
+        let batteries = input
+            .lines()
+            .map(|line| {
+                line.chars()
+                    .map(|num| num.to_digit(10).unwrap() as u64)
+                    .collect::<Vec<u64>>()
+            })
+            .collect::<Vec<Vec<u64>>>();
+        let sum = batteries
+            .iter()
+            .map(|battery| {
+                let mut max_jolts = 0;
+                let mut start_iter = battery.iter();
+                for first in start_iter.clone() {
+                    let second_iter = start_iter.clone().skip(1);
 
-                for second in second_iter {
-                    let jolts = first * 10 + second;
-                    if jolts > max_jolts {
-                        max_jolts = jolts;
+                    for second in second_iter {
+                        let jolts = first * 10 + second;
+                        if jolts > max_jolts {
+                            max_jolts = jolts;
+                        }
                     }
+
+                    start_iter.next();
                 }
 
-                start_iter.next();
-            }
-
-            max_jolts
-        }).sum::<u64>();
+                max_jolts
+            })
+            .sum::<u64>();
 
         Ok(sum)
     }
-    
+
     #[tracing::instrument]
-    fn part2(input: &str) -> Result<u64> {
-        let batteries = input.lines().map(|line| line.chars().map(|num| num.to_digit(10).unwrap() as u64).collect::<Vec<u64>>()).collect::<Vec<Vec<u64>>>();
-        let sum = batteries.iter().map(|battery| {
-            let mut stack = Vec::with_capacity(PART_2_NUMS);
-            let n = battery.len();
-            for (i, &digit) in battery.iter().enumerate() {
-                while let Some(&top) = stack.last() {
-                    if top < digit && stack.len() + (n - 1 - i) >= PART_2_NUMS {
-                        stack.pop();
-                    } else {
-                        break;
+    fn part2(input: &str) -> Result<Answer> {
+        let batteries = input
+            .lines()
+            .map(|line| {
+                line.chars()
+                    .map(|num| num.to_digit(10).unwrap() as u64)
+                    .collect::<Vec<u64>>()
+            })
+            .collect::<Vec<Vec<u64>>>();
+        let sum = batteries
+            .iter()
+            .map(|battery| {
+                let mut stack = Vec::with_capacity(PART_2_NUMS);
+                let n = battery.len();
+                for (i, &digit) in battery.iter().enumerate() {
+                    while let Some(&top) = stack.last() {
+                        if top < digit && stack.len() + (n - 1 - i) >= PART_2_NUMS {
+                            stack.pop();
+                        } else {
+                            break;
+                        }
+                    }
+                    if stack.len() < PART_2_NUMS {
+                        stack.push(digit);
                     }
                 }
-                if stack.len() < PART_2_NUMS {
-                    stack.push(digit);
-                }
-            }
-            stack.iter().fold(0, |acc, &d| acc * 10 + d)
-        }).sum::<u64>();
+                stack.iter().fold(0, |acc, &d| acc * 10 + d)
+            })
+            .sum::<u64>();
 
         Ok(sum)
     }

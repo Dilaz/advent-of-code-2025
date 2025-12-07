@@ -1,16 +1,18 @@
 #[path = "../../utils.rs"]
 pub mod utils;
 
-pub use utils::Solution;
-use miette::Result;
+pub use utils::{Result, Solution};
+
+pub type Answer = u32;
+
 pub struct Day1;
 
 const DIAL_START: i32 = 50;
 const DIAL_MAX: i32 = 100;
 
-impl Solution<u32> for Day1 {
+impl Solution<Answer> for Day1 {
     #[tracing::instrument]
-    fn part1(input: &str) -> Result<u32> {
+    fn part1(input: &str) -> Result<Answer> {
         let mut current_ticks = DIAL_START;
         let mut points_at_zero = 0;
         for line in input.lines() {
@@ -31,13 +33,13 @@ impl Solution<u32> for Day1 {
             if current_ticks == 0 {
                 points_at_zero += 1;
             }
-        } 
+        }
 
         Ok(points_at_zero)
     }
-    
+
     #[tracing::instrument]
-    fn part2(input: &str) -> Result<u32> {
+    fn part2(input: &str) -> Result<Answer> {
         let mut current_ticks = DIAL_START;
         let mut points_at_zero = 0u32;
         for line in input.lines() {

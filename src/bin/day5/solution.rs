@@ -2,13 +2,16 @@
 pub mod utils;
 
 use itertools::Itertools;
-pub use utils::Solution;
-use miette::Result;
+
+pub use utils::{Result, Solution};
+
+pub type Answer = u64;
+
 pub struct Day5;
 
-impl Solution<u64> for Day5 {
+impl Solution<Answer> for Day5 {
     #[tracing::instrument]
-    fn part1(input: &str) -> Result<u64> {
+    fn part1(input: &str) -> Result<Answer> {
         let mut fresh_ids = Vec::with_capacity(200);
         let mut line_iter = input.lines();
 
@@ -23,12 +26,12 @@ impl Solution<u64> for Day5 {
                 .collect_tuple()
                 .unwrap();
 
-                fresh_ids.push((start, end));
+            fresh_ids.push((start, end));
         }
 
         let mut count = 0;
         for line in line_iter {
-            let  num = line.parse::<u64>().unwrap();
+            let num = line.parse::<u64>().unwrap();
             for (start, end) in fresh_ids.iter() {
                 if start < &num && &num <= end {
                     count += 1;
@@ -39,13 +42,13 @@ impl Solution<u64> for Day5 {
 
         Ok(count)
     }
-    
+
     #[tracing::instrument]
-    fn part2(input: &str) -> Result<u64> {
+    fn part2(input: &str) -> Result<Answer> {
         let mut line_iter = input.lines();
 
         let mut fresh_ids = Vec::with_capacity(200);
-        
+
         for line in line_iter.by_ref() {
             if line.is_empty() {
                 break;
@@ -86,7 +89,6 @@ impl Solution<u64> for Day5 {
         for (start, end) in final_ranges {
             total_fresh += end - start + 1;
         }
-
 
         Ok(total_fresh)
     }

@@ -1,15 +1,19 @@
 #[path = "../../utils.rs"]
 pub mod utils;
+
 use std::collections::{BTreeMap, BTreeSet};
 
 use itertools::Itertools;
-use miette::Result;
-pub use utils::Solution;
+
+pub use utils::{Result, Solution};
+
+pub type Answer = u64;
+
 pub struct Day7;
 
-impl Solution<u64> for Day7 {
+impl Solution<Answer> for Day7 {
     #[tracing::instrument]
-    fn part1(input: &str) -> Result<u64> {
+    fn part1(input: &str) -> Result<Answer> {
         let lines = input.lines().collect_vec();
         let start = lines.first().unwrap().find('S').unwrap();
         let mut beams = BTreeSet::new();
@@ -36,7 +40,7 @@ impl Solution<u64> for Day7 {
     }
 
     #[tracing::instrument]
-    fn part2(input: &str) -> Result<u64> {
+    fn part2(input: &str) -> Result<Answer> {
         let lines = input.lines().collect_vec();
         let start = lines.first().unwrap().find('S').unwrap();
         let mut beams: Vec<BTreeMap<usize, u64>> = vec![BTreeMap::from([(start, 1)])];

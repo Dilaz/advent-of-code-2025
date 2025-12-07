@@ -1,17 +1,19 @@
 #[path = "../../utils.rs"]
 pub mod utils;
-pub use utils::Solution;
-use miette::Result;
+pub use utils::{Result, Solution};
+
+pub type Answer = u32;
+
 pub struct DayX;
 
-impl Solution<u32> for DayX {
+impl Solution<Answer> for DayX {
     #[tracing::instrument]
-    fn part1(input: &str) -> Result<u32> {
+    fn part1(input: &str) -> Result<Answer> {
         Ok(0)
     }
-    
+
     #[tracing::instrument]
-    fn part2(input: &str) -> Result<u32> {
+    fn part2(input: &str) -> Result<Answer> {
         Ok(0)
     }
 }

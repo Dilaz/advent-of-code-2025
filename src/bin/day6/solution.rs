@@ -1,18 +1,25 @@
 #[path = "../../utils.rs"]
 pub mod utils;
+
 use itertools::Itertools;
-pub use utils::Solution;
-use miette::Result;
-pub use utils::Length;
+
+pub use utils::{Length, Result, Solution};
+
+pub type Answer = u64;
+
 pub struct Day6;
 
-impl Solution<u64> for Day6 {
+impl Solution<Answer> for Day6 {
     #[tracing::instrument]
-    fn part1(input: &str) -> Result<u64> {
+    fn part1(input: &str) -> Result<Answer> {
         let mut values = input
-        .lines()
-        .map(|line| line.split_whitespace().filter(|s| !s.is_empty()).collect::<Vec<&str>>())
-        .collect::<Vec<Vec<&str>>>();
+            .lines()
+            .map(|line| {
+                line.split_whitespace()
+                    .filter(|s| !s.is_empty())
+                    .collect::<Vec<&str>>()
+            })
+            .collect::<Vec<Vec<&str>>>();
 
         let operators = values.pop().unwrap();
         let number_of_calculations = operators.len();
@@ -21,14 +28,30 @@ impl Solution<u64> for Day6 {
             let operator = operators.get(col).unwrap();
             match *operator {
                 "+" => {
-                    total += (0usize..values.len()).map(|row| {
-                        values.get(row).unwrap().get(col).unwrap().parse::<u64>().unwrap()
-                    }).sum::<u64>();
+                    total += (0usize..values.len())
+                        .map(|row| {
+                            values
+                                .get(row)
+                                .unwrap()
+                                .get(col)
+                                .unwrap()
+                                .parse::<u64>()
+                                .unwrap()
+                        })
+                        .sum::<u64>();
                 }
                 "*" => {
-                    total += (0usize..values.len()).map(|row| {
-                        values.get(row).unwrap().get(col).unwrap().parse::<u64>().unwrap()
-                    }).product::<u64>();
+                    total += (0usize..values.len())
+                        .map(|row| {
+                            values
+                                .get(row)
+                                .unwrap()
+                                .get(col)
+                                .unwrap()
+                                .parse::<u64>()
+                                .unwrap()
+                        })
+                        .product::<u64>();
                 }
                 _ => unreachable!(),
             }
@@ -36,14 +59,14 @@ impl Solution<u64> for Day6 {
 
         Ok(total)
     }
-    
+
     #[tracing::instrument]
-    fn part2(input: &str) -> Result<u64> {
-        let mut values = input
-            .lines()
-            .collect::<Vec<&str>>();
-    
-        let operators = values.pop().unwrap()
+    fn part2(input: &str) -> Result<Answer> {
+        let mut values = input.lines().collect::<Vec<&str>>();
+
+        let operators = values
+            .pop()
+            .unwrap()
             .split_whitespace()
             .filter(|s| !s.is_empty())
             .collect_vec();
@@ -62,7 +85,7 @@ impl Solution<u64> for Day6 {
                             n if n.is_ascii_digit() => {
                                 all_empty = false;
                                 current_num = current_num * 10 + n.to_digit(10).unwrap() as u64;
-                            },
+                            }
                             _ => (),
                         }
                     }
