@@ -62,9 +62,9 @@ impl Solution<Answer> for Day2 {
                     .unwrap();
                 (start..=end)
                     .filter(|num| is_invalid_part1(*num))
-                    .sum::<u64>()
+                    .sum::<Answer>()
             })
-            .sum::<u64>();
+            .sum::<Answer>();
 
         Ok(sum)
     }
@@ -82,9 +82,9 @@ impl Solution<Answer> for Day2 {
                     .unwrap();
                 (start..=end)
                     .filter(|num| is_invalid_part2(*num))
-                    .sum::<u64>()
+                    .sum::<Answer>()
             })
-            .sum::<u64>();
+            .sum::<Answer>();
 
         Ok(sum)
     }

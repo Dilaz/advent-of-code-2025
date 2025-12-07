@@ -5,7 +5,7 @@ use glam::IVec2;
 
 pub use utils::{Result, Solution};
 
-pub type Answer = u32;
+pub type Answer = u64;
 
 pub struct Day4;
 
@@ -69,7 +69,7 @@ impl Solution<Answer> for Day4 {
             })
             .sum::<usize>();
 
-        Ok(valid as u32)
+        Ok(valid as Answer)
     }
 
     #[tracing::instrument]
@@ -114,7 +114,7 @@ impl Solution<Answer> for Day4 {
             total += valid;
         }
 
-        Ok(total as u32)
+        Ok(total as Answer)
     }
 }
 

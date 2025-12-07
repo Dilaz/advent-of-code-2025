@@ -40,7 +40,7 @@ impl Solution<Answer> for Day3 {
 
                 max_jolts
             })
-            .sum::<u64>();
+            .sum::<Answer>();
 
         Ok(sum)
     }
@@ -74,7 +74,7 @@ impl Solution<Answer> for Day3 {
                 }
                 stack.iter().fold(0, |acc, &d| acc * 10 + d)
             })
-            .sum::<u64>();
+            .sum::<Answer>();
 
         Ok(sum)
     }

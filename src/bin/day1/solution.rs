@@ -41,7 +41,7 @@ impl Solution<Answer> for Day1 {
     #[tracing::instrument]
     fn part2(input: &str) -> Result<Answer> {
         let mut current_ticks = DIAL_START;
-        let mut points_at_zero = 0u32;
+        let mut points_at_zero: Answer = 0;
         for line in input.lines() {
             let is_positive = matches!(line.chars().next(), Some('R'));
             let num = line.get(1..).unwrap().parse::<i32>().unwrap();
@@ -53,7 +53,7 @@ impl Solution<Answer> for Day1 {
             } else {
                 (num - current_ticks + DIAL_MAX) / DIAL_MAX
             };
-            points_at_zero += crossings as u32;
+            points_at_zero += crossings as Answer;
 
             current_ticks += num * if is_positive { 1 } else { -1 };
             current_ticks %= DIAL_MAX;

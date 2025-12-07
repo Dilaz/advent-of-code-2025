@@ -19,7 +19,7 @@ impl Solution<Answer> for Day7 {
         let mut beams = BTreeSet::new();
         beams.insert(start);
 
-        let mut split_counter = 0;
+        let mut split_counter: Answer = 0;
         for line in lines.into_iter().skip(1) {
             let mut new_beams = BTreeSet::new();
             for (i, c) in line.chars().enumerate() {
@@ -43,11 +43,11 @@ impl Solution<Answer> for Day7 {
     fn part2(input: &str) -> Result<Answer> {
         let lines = input.lines().collect_vec();
         let start = lines.first().unwrap().find('S').unwrap();
-        let mut beams: Vec<BTreeMap<usize, u64>> = vec![BTreeMap::from([(start, 1)])];
+        let mut beams: Vec<BTreeMap<usize, Answer>> = vec![BTreeMap::from([(start, 1)])];
 
         for line in lines.into_iter().skip(1) {
             let prev_beams = beams.last().unwrap();
-            let mut new_beams = BTreeMap::<usize, u64>::new();
+            let mut new_beams = BTreeMap::<usize, Answer>::new();
             for (i, c) in line.chars().enumerate() {
                 if let Some(num_beams) = prev_beams.get(&i) {
                     if c == '^' {

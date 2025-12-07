@@ -35,10 +35,10 @@ impl Solution<Answer> for Day6 {
                                 .unwrap()
                                 .get(col)
                                 .unwrap()
-                                .parse::<u64>()
+                                .parse::<Answer>()
                                 .unwrap()
                         })
-                        .sum::<u64>();
+                        .sum::<Answer>();
                 }
                 "*" => {
                     total += (0usize..values.len())
@@ -48,10 +48,10 @@ impl Solution<Answer> for Day6 {
                                 .unwrap()
                                 .get(col)
                                 .unwrap()
-                                .parse::<u64>()
+                                .parse::<Answer>()
                                 .unwrap()
                         })
-                        .product::<u64>();
+                        .product::<Answer>();
                 }
                 _ => unreachable!(),
             }
@@ -72,11 +72,11 @@ impl Solution<Answer> for Day6 {
             .collect_vec();
 
         let mut current_col = 0usize;
-        let mut total = 0u64;
+        let mut total: Answer = 0;
         for operator in operators.iter() {
             let mut numbers = vec![];
             loop {
-                let mut current_num = 0u64;
+                let mut current_num: Answer = 0;
                 let mut all_empty = true;
                 for row in values.iter() {
                     if let Some(ch) = row.chars().nth(current_col) {
@@ -84,7 +84,7 @@ impl Solution<Answer> for Day6 {
                             ' ' => (),
                             n if n.is_ascii_digit() => {
                                 all_empty = false;
-                                current_num = current_num * 10 + n.to_digit(10).unwrap() as u64;
+                                current_num = current_num * 10 + n.to_digit(10).unwrap() as Answer;
                             }
                             _ => (),
                         }
@@ -94,8 +94,8 @@ impl Solution<Answer> for Day6 {
                     numbers.push(current_num);
                 } else {
                     match *operator {
-                        "+" => total += numbers.iter().sum::<u64>(),
-                        "*" => total += numbers.iter().product::<u64>(),
+                        "+" => total += numbers.iter().sum::<Answer>(),
+                        "*" => total += numbers.iter().product::<Answer>(),
                         _ => unreachable!(),
                     };
 
