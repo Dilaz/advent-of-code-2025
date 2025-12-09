@@ -89,3 +89,14 @@ test = true
 name = "day7"
 harness = false
 path = "src/bin/day7/bench.rs"
+
+[[bin]]
+name = "day8"
+bench = false
+test = true
+
+[[bench]]
+name = "day8"
+harness = false
+path = "src/bin/day8/bench.rs"
+
