@@ -8,6 +8,7 @@ autobins = false
 divan = "0.1.21"
 glam = "0.30.9"
 itertools = "0.14.0"
+lazy_static = "1.5.0"
 miette = { version = "7.6.0", features = ["fancy"] }
 nom = "8.0.0"
 pathfinding = "4.14.0"
@@ -15,6 +16,7 @@ rayon = "1.11.0"
 regex = "1.12.2"
 tracing = "0.1.43"
 tracing-subscriber = "0.3.22"
+good_lp = { version = "1.10", default-features = false, features = ["microlp"] }
 
 [[bin]]
 name = "day1"
@@ -100,3 +102,22 @@ name = "day8"
 harness = false
 path = "src/bin/day8/bench.rs"
 
+[[bin]]
+name = "day9"
+bench = false
+test = true
+
+[[bench]]
+name = "day9"
+harness = false
+path = "src/bin/day9/bench.rs"
+
+[[bin]]
+name = "day10"
+bench = false
+test = true
+
+[[bench]]
+name = "day10"
+harness = false
+path = "src/bin/day10/bench.rs"
